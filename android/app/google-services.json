@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "200790409217",
+    "firebase_url": "https://contacts-app-xio.firebaseio.com",
+    "project_id": "contacts-app-xio",
+    "storage_bucket": "contacts-app-xio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200790409217:android:5cd4ec0705d084599b8000",
+        "android_client_info": {
+          "package_name": "com.xiobit.agenda_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "200790409217-qj3043ej3c49lveg5uough8h5p1c3427.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNGiQp9ELDtXszi46_i8vIhUqGAbrTuW4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "200790409217-qj3043ej3c49lveg5uough8h5p1c3427.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
