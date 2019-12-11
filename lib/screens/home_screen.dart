@@ -1,5 +1,7 @@
 import 'package:agenda_app/core/models/contact.dart';
 import 'package:agenda_app/core/providers/contact_provider.dart';
+import 'package:agenda_app/screens/contact_form_screen.dart';
+import 'package:agenda_app/utils/common.dart';
 import 'package:agenda_app/widgets/contact_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,11 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           }
       ),
-
-
-
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          changeScreen(context, ContactFormScreen());
+        },
         child: Icon(Icons.add),
       ),
     );
