@@ -4,4 +4,6 @@ abstract class ContactService {
 
   Stream<List<Contact>> getAllContacts();
 
+  Future<String> save(Contact contact);
+
 }

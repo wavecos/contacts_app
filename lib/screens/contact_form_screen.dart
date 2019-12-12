@@ -1,4 +1,9 @@
+import 'package:agenda_app/core/models/contact.dart';
+import 'package:agenda_app/core/providers/contact_provider.dart';
+import 'package:agenda_app/screens/home_screen.dart';
+import 'package:agenda_app/utils/common.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ContactFormScreen extends StatefulWidget {
   @override
@@ -6,6 +11,8 @@ class ContactFormScreen extends StatefulWidget {
 }
 
 class _ContactFormScreenState extends State<ContactFormScreen> {
+
+  final _formKey = GlobalKey<FormState>();
 
   TextEditingController _firstNameTextController;
   TextEditingController _lastNameTextController;
@@ -36,6 +43,7 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final contactProvider = Provider.of<ContactProvider>(context);
 
     final firstNameTextField = TextFormField(
       controller: _firstNameTextController,
@@ -47,6 +55,7 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
       ),
       focusNode: _firstNameFocusNode,
       textInputAction: TextInputAction.next,
+      validator: (value) => (value.isEmpty) ? 'El campo es requerido' : null,
       onFieldSubmitted: (v) {
         FocusScope.of(context).requestFocus(_lastNameFocusNode);
       },
@@ -63,15 +72,39 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
       textInputAction: TextInputAction.done,
     );
 
+    final registerButton = RaisedButton(
+      onPressed: () async {
+        if (_formKey.currentState.validate()) {
+
+          Contact contact = Contact(
+            firstName: _firstNameTextController.text,
+            lastName: _lastNameTextController.text
+          );
+
+          await contactProvider.saveContact(contact);
+
+          changeScreen(context, HomeScreen());
+        }
+      },
+      child: const Text('Guardar'),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Nuevo Contacto'),
       ),
-      body: Column(
-        children: <Widget>[
-          firstNameTextField,
-          lastNameTextField,
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
+              firstNameTextField,
+              lastNameTextField,
+              registerButton,
+            ],
+          ),
+        ),
       ),
     );
   }

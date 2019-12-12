@@ -22,4 +22,11 @@ class ContactServiceFbImpl implements ContactService {
                 .toList()
     );
   }
+
+  @override
+  Future<String> save(Contact contact) async {
+    DocumentReference contactRef = await ref.add(contact.toJson());
+    return contactRef.documentID;
+  }
+
 }

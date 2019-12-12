@@ -11,4 +11,8 @@ class ContactProvider extends ChangeNotifier {
     return _contactService.getAllContacts();
   }
 
+  Future<String> saveContact(Contact contact) {
+    return _contactService.save(contact);
+  }
+
 }

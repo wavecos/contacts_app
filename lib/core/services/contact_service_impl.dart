@@ -19,4 +19,10 @@ class ContactServiceImpl implements ContactService {
     return contacts;
   }
 
+  @override
+  Future<String> save(Contact contact) {
+
+  }
+
+
 }
