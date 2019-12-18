@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:agenda_app/core/models/contact.dart';
 import 'package:agenda_app/core/providers/contact_provider.dart';
 import 'package:agenda_app/screens/home_screen.dart';
 import 'package:agenda_app/utils/common.dart';
+import 'package:agenda_app/widgets/photo_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:validators/validators.dart';
@@ -23,6 +26,8 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
   FocusNode _firstNameFocusNode;
   FocusNode _lastNameFocusNode;
   FocusNode _emailFocusNode;
+
+  File _imageSelected;
 
   @override
   void initState() {
@@ -111,7 +116,10 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
             email: _emailTextController.text
           );
 
-          await contactProvider.saveContact(contact);
+          String contactId = await contactProvider.saveContact(contact);
+
+          await contactProvider.uploadPhotoProfile(contactId, _imageSelected);
+
 
           changeScreen(context, HomeScreen());
         }
@@ -129,6 +137,25 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
           key: _formKey,
           child: ListView(
             children: <Widget>[
+              Stack(
+                alignment: AlignmentDirectional.center,
+                children: <Widget>[
+                  CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    backgroundImage: _imageSelected == null ? AssetImage('assets/images/empty-profile.png') : FileImage(_imageSelected),
+                    maxRadius: 60.0,
+                    minRadius: 40.0,
+                  ),
+                  FloatingActionButton(
+                      child: Icon(Icons.add),
+                      mini: true,
+                      onPressed: () {
+                        _showPhotoSelector();
+                      }
+                  ),
+                ],
+              ),
+
               firstNameTextField,
               lastNameTextField,
               emailTextField,
@@ -139,4 +166,18 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
       ),
     );
   }
+
+  void _showPhotoSelector() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return PhotoSelector(onImageSelected: (File imageSelected) {
+            setState(() {
+              _imageSelected = imageSelected;
+            });
+          },);
+        });
+  }
+
+
 }

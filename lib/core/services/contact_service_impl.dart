@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:agenda_app/core/models/contact.dart';
 import 'package:agenda_app/core/services/contact_service.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class ContactServiceImpl implements ContactService {
 
@@ -21,6 +24,11 @@ class ContactServiceImpl implements ContactService {
 
   @override
   Future<String> save(Contact contact) {
+
+  }
+
+  @override
+  StorageUploadTask uploadImage(String fileName, File image) {
 
   }
 
