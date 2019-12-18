@@ -4,6 +4,7 @@ import 'package:agenda_app/screens/home_screen.dart';
 import 'package:agenda_app/utils/common.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:validators/validators.dart';
 
 class ContactFormScreen extends StatefulWidget {
   @override
@@ -16,28 +17,34 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
 
   TextEditingController _firstNameTextController;
   TextEditingController _lastNameTextController;
+  TextEditingController _emailTextController;
 
   // Focus
   FocusNode _firstNameFocusNode;
   FocusNode _lastNameFocusNode;
+  FocusNode _emailFocusNode;
 
   @override
   void initState() {
     super.initState();
     _firstNameTextController = TextEditingController();
     _lastNameTextController = TextEditingController();
+    _emailTextController = TextEditingController();
     // Focus
     _firstNameFocusNode = FocusNode();
     _lastNameFocusNode = FocusNode();
+    _emailFocusNode = FocusNode();
   }
 
   @override
   void dispose() {
     _firstNameTextController.dispose();
     _lastNameTextController.dispose();
+    _emailTextController.dispose();
     // Focus
     _firstNameFocusNode.dispose();
     _lastNameFocusNode.dispose();
+    _emailFocusNode.dispose();
     super.dispose();
   }
 
@@ -51,7 +58,6 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
       autocorrect: false,
       decoration: InputDecoration(
         labelText: 'Nombre',
-        helperText: 'Coloca tu primer nombre'
       ),
       focusNode: _firstNameFocusNode,
       textInputAction: TextInputAction.next,
@@ -69,6 +75,29 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
         labelText: 'Apellido',
       ),
       focusNode: _lastNameFocusNode,
+      textInputAction: TextInputAction.next,
+      onFieldSubmitted: (v) {
+        FocusScope.of(context).requestFocus(_emailFocusNode);
+      },
+    );
+
+    final emailTextField = TextFormField(
+      controller: _emailTextController,
+      keyboardType: TextInputType.emailAddress,
+      autocorrect: false,
+      decoration: InputDecoration(
+        labelText: 'Correo Electrónico',
+      ),
+      focusNode: _emailFocusNode,
+      validator: (value) {
+        if (value.isEmpty) {
+          return 'El email es requerido';
+        } else if (!isEmail(value)) {
+          return 'El correo no es válido';
+        } else {
+          return null;
+        }
+      },
       textInputAction: TextInputAction.done,
     );
 
@@ -78,7 +107,8 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
 
           Contact contact = Contact(
             firstName: _firstNameTextController.text,
-            lastName: _lastNameTextController.text
+            lastName: _lastNameTextController.text,
+            email: _emailTextController.text
           );
 
           await contactProvider.saveContact(contact);
@@ -101,6 +131,7 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
             children: <Widget>[
               firstNameTextField,
               lastNameTextField,
+              emailTextField,
               registerButton,
             ],
           ),
