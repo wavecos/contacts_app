@@ -8,7 +8,7 @@ class AgendaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(builder: (_) => ContactProvider(),)
+        ChangeNotifierProvider(create: (_) => ContactProvider(),)
       ],
       child: MaterialApp(
         title: 'Agenda App',

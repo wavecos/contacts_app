@@ -5,6 +5,7 @@ import 'package:agenda_app/core/providers/contact_provider.dart';
 import 'package:agenda_app/screens/home_screen.dart';
 import 'package:agenda_app/utils/common.dart';
 import 'package:agenda_app/widgets/photo_selector.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:validators/validators.dart';
@@ -121,7 +122,7 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
           await contactProvider.uploadPhotoProfile(contactId, _imageSelected);
 
 
-          changeScreen(context, HomeScreen());
+          changeScreen(context, HomeScreen(), false);
         }
       },
       child: const Text('Guardar'),
@@ -137,25 +138,41 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
           key: _formKey,
           child: ListView(
             children: <Widget>[
-              Stack(
-                alignment: AlignmentDirectional.center,
+//              Stack(
+//                alignment: AlignmentDirectional.center,
+//                children: <Widget>[
+//                  CircleAvatar(
+//                    backgroundColor: Colors.black12,
+//                    backgroundImage: _imageSelected == null ? AssetImage('assets/images/empty-profile.png') : FileImage(_imageSelected),
+//                    maxRadius: 60.0,
+//                    minRadius: 40.0,
+//                  ),
+//                  FloatingActionButton(
+//                      child: Icon(Icons.add),
+//                      mini: true,
+//                      onPressed: () {
+//                        _showPhotoSelector();
+//                      }
+//                  ),
+//                ],
+//              ),
+              Column(
                 children: <Widget>[
-                  CircleAvatar(
-                    backgroundColor: Colors.black12,
-                    backgroundImage: _imageSelected == null ? AssetImage('assets/images/empty-profile.png') : FileImage(_imageSelected),
-                    maxRadius: 60.0,
-                    minRadius: 40.0,
-                  ),
-                  FloatingActionButton(
-                      child: Icon(Icons.add),
-                      mini: true,
-                      onPressed: () {
-                        _showPhotoSelector();
-                      }
+                  GestureDetector(
+                    onTap: () {
+                      _showPhotoSelector();
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.black12,
+                      backgroundImage: _imageSelected == null ? AssetImage(
+                          'assets/images/empty-profile.png') : FileImage(
+                          _imageSelected),
+                      maxRadius: 60.0,
+                      minRadius: 40.0,
+                    ),
                   ),
                 ],
               ),
-
               firstNameTextField,
               lastNameTextField,
               emailTextField,

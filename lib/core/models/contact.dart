@@ -26,7 +26,7 @@ class Contact {
         email = snapshot['email'] ?? '',
         gender = snapshot['gender'] ?? '',
         mobileNumber = snapshot['mobileNumber'] ?? '',
-        profilePhotoUrl = snapshot['profilePhotoUrl'] ?? '';
+        profilePhotoUrl = snapshot['profilePhotoUrl'] ?? null;
 
   toJson() {
     return {

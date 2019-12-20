@@ -22,7 +22,7 @@ class ContactCard extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: CircleAvatar(
                   maxRadius: 40.0,
-                  backgroundImage: NetworkImage(contact.profilePhotoUrl),
+                  backgroundImage: contact.profilePhotoUrl != null ? NetworkImage(contact.profilePhotoUrl) : AssetImage('assets/images/empty-profile.png'),
                 )
             ),
             Container(

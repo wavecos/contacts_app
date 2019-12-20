@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          changeScreen(context, ContactFormScreen());
+          changeScreen(context, ContactFormScreen(), true);
         },
         child: Icon(Icons.add),
       ),
